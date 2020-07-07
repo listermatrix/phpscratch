@@ -8,9 +8,13 @@ validate($_POST);   // get all post parameters
 
 header('location:index.php');
 
+
 //var_dump($_SESSION);  //printing all session values
 
 //validation logic
+
+
+
 
 function validate($params)
 {
