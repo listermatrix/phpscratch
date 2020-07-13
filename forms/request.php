@@ -1,4 +1,5 @@
 <?php
+//error_reporting(E_ERROR | E_PARSE);
 //declare session start
 //we will use sessions to store error messages and
 // pass them to the view
@@ -162,24 +163,45 @@ function connectoDB()
     $port = '3306';  // ??
 
 
-    $connection = mysqli_connect($host,$username,$password,$database,$port);
+    $connection = new mysqli($host,$username,$password,$database);  //we didnt specify the database name
 
-    //look into mysqli connection state success or failed ??
-
-    $connection = new mysqli($host,$username,$password,$database);
-
-
-
-//     Check connection
     if ($connection->connect_error) {
         die("Connection failed: " . $connection->connect_error);
     }
-    echo "Connected successfully";
+
+
+    //inset statement
+
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+
+//    var_dump($name,$username,$email);
+//    exit();
 
 
 
-    $tables = $connection->query("select * from user_data where email='ice2@mail.com'");
+    /** @var delete $statement  */
+    $statement =  "delete from user_data where username='$username'";  //delete statement
+    $insert = $connection->query($statement);
+    var_dump($insert);
+    exit();
 
+
+
+    $statement =  "update user_data set username='mylpatop' where username='$username'";  //insert statement
+    $insert = $connection->query($statement);
+    var_dump($insert);
+    exit();
+
+
+    /** @var insert $statement  */
+    $statement =  "insert into user_data (name,username,email) values ('$name','$username','$email')";
+    $insert = $connection->query($statement);
+    var_dump($insert);
+
+    /** @var simple select statement $tables */
+    $tables = $connection->query("select * from user_data");
     while ($row = $tables->fetch_assoc())
     {
        echo  $row['name'] .' '.$row['email'].'<br>';
