@@ -177,6 +177,7 @@ function connectoDB()
     echo "Connected successfully";
 
 
+
     $tables = $connection->query("select * from user_data where email='ice2@mail.com'");
 
     while ($row = $tables->fetch_assoc())
