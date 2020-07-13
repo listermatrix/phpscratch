@@ -189,6 +189,7 @@ function connectoDB()
 
 
 
+
     $statement =  "update user_data set username='mylpatop' where username='$username'";  //insert statement
     $insert = $connection->query($statement);
     var_dump($insert);
