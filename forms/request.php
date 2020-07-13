@@ -4,6 +4,8 @@
 //we will use sessions to store error messages and
 // pass them to the view
 session_start();
+echo 'hellooooo';
+exit();
 connectoDB();  //database connection function
 exit();
 
