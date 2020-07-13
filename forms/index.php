@@ -1,7 +1,13 @@
 <?php
-session_start();  ///
 
-//var_dump($_SESSION);
+session_start();  //enable sessions for the page in order to access session values
+
+
+//session_destroy();  //destroy or close the session
+
+
+//var_dump($_SESSION,'hello');
+//    exit();
 
 ?>
 
@@ -16,10 +22,61 @@ session_start();  ///
 
 <form method="post"  action="request.php">
 
-    <p style="color: red"><?php echo $_SESSION['name_error'] ?></p>
-    <p style="color: red"><?php echo $_SESSION['email_error'] ?></p>
-    <p style="color: red"><?php echo $_SESSION['username_error'] ?></p>
-    <p style="color: red"><?php echo $_SESSION['phone_error'] ?></p>
+    <p style="color: red">
+        <?php
+
+//                echo $_SESSION['name_error']  ?? null;   //?? symbol is null coelaescing  operator
+
+                if(isset($_SESSION['name_error']))
+                {
+                    echo $_SESSION['name_error'];
+                }
+                else{
+                    echo  null;
+                }
+
+        ?>
+    </p>
+
+
+    <p style="color: red">
+        <?php
+
+
+          if(isset($_SESSION['email_error']))
+          {
+              echo $_SESSION['email_error'];
+          }
+          else{
+              echo  null;
+          }
+
+        ?></p>
+    <p style="color: red">  <?php
+
+
+        if(isset($_SESSION['username_error']))
+        {
+            echo $_SESSION['username_error'];
+        }
+        else{
+            echo  null;
+        }
+
+        ?></p>
+    <p style="color: red">
+        <?php
+
+
+        if(isset($_SESSION['phone_error']))
+        {
+            echo $_SESSION['phone_error'];
+        }
+        else{
+            echo  null;
+        }
+
+        ?></p>
 
     <br>
     <label>Name</label>
