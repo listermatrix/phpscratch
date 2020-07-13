@@ -136,16 +136,6 @@ function validate($params)
 
 }
 
-
-//
-//1. fill the form,  done
-//2. validate data,  done
-//3. if successful
-//    - save to db
-//   else
-//   display validation message
-
-
 //save to the database
 function connectoDB()
 {
@@ -182,7 +172,6 @@ function connectoDB()
     $insert = $connection->query($statement);
     var_dump($insert);
     exit();
-
 
 
 
