@@ -176,10 +176,6 @@ function connectoDB()
     $username = $_POST['username'];
     $email = $_POST['email'];
 
-//    var_dump($name,$username,$email);
-//    exit();
-
-
 
     /** @var delete $statement  */
     $statement =  "delete from user_data where username='$username'";  //delete statement
