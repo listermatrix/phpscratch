@@ -13,7 +13,7 @@ session_start();
 if(isset($_POST['submit']))
 {
 
-    validate($_POST);
+    validate($_POST,$connection);
 }
 
 
@@ -37,7 +37,7 @@ if(isset($_POST['editBtn']))
    updateUserInfo($connection);
 }
 
-function validate($params)
+function validate($params,$connection)
 {
 
     $name = $params['name'];
