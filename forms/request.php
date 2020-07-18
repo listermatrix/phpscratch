@@ -1,27 +1,41 @@
 <?php
+
+require_once 'connection.php';
 //error_reporting(E_ERROR | E_PARSE);
 //declare session start
 //we will use sessions to store error messages and
 // pass them to the view
 session_start();
-echo 'hellooooo';
-exit();
-connectoDB();  //database connection function
-exit();
-
-
-
-validate($_POST);   // get all post parameters
 
 
 
 
-header('location:index.php');  //redirect page to index.php
+if(isset($_POST['submit']))
+{
+
+    validate($_POST);
+}
 
 
+//for opening edit form
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    header("location:edit.php?id=$id");
+}
+
+//for deleting user from the database
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $tables = $connection->query("delete from user_data where id=$id");
+    header('location:table.php');
+
+}
 
 
-
+if(isset($_POST['editBtn']))
+{
+   updateUserInfo($connection);
+}
 
 function validate($params)
 {
@@ -136,10 +150,23 @@ function validate($params)
 
 
 
+    //if all validation has passed then  process data to database else redirect back to form with errors
+    if(!empty($_SESSION['name_error'])  || !empty($_SESSION['email_error'])  || !empty($_SESSION['username_error'])  || !empty($_SESSION['phone_error']))
+    {
+        header('location:index.php');  //redirect page to index.php
+    }
+    else
+    {
+        processData($connection);
+    }
+
+
+
+
 }
 
 //save to the database
-function connectoDB()
+function processData($connection)
 {
     //fields name,username,email
     //mysql connection
@@ -148,19 +175,110 @@ function connectoDB()
     //insert statement
     //close the connection
 
-    $host = 'localhost'; //same as 127.0.0.1
-    $username = 'root';
-    $password = 'Oneness123@';
-    $database = 'php_form';
-    $port = '3306';  // ??
 
 
-    $connection = new mysqli($host,$username,$password,$database);  //we didnt specify the database name
 
-    if ($connection->connect_error) {
-        die("Connection failed: " . $connection->connect_error);
+
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $phone_number = $_POST['phone_number'];
+
+
+
+    /** @var insert $statement  */
+    $statement =  "insert into user_data (name,username,email,phone_number) values ('$name','$username','$email','$phone_number')";
+    $insert = $connection->query($statement);
+
+
+    header('location:table.php');  //redirect page to index.php
+
+
+}
+
+
+function updateUserInfo($connection)
+{
+    $id = $_GET['id'];
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $phone_number = $_POST['phone_number'];
+
+
+//
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["user_file"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+// Check if image file is a actual image or fake image
+    if(isset($_POST["submit"])) {
+        $check = getimagesize($_FILES["user_file"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
     }
 
+// Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+
+// Check file size
+    if ($_FILES["user_file"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+// Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+// Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["user_file"]["tmp_name"], $target_file)) {
+            echo "The file ". basename( $_FILES["user_file"]["name"]). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+    exit();
+
+
+    echo 'Here is some more debugging info:';
+
+    print "</pre>";
+
+
+
+    /** @noinspection SqlNoDataSourceInspection */
+    $statement =  "update   user_data set 
+                            name     = '$name' ,  
+                            phone_number = '$phone_number' ,  
+                            username = '$username',             
+                            email    = '$email' where 
+                            id = $id;";  //update statement
+
+
+    $update = $connection->query($statement);
+    header('location:table.php');
+}
+
+
+function legacy($connection)
+{
 
     //inset statement
 
@@ -192,11 +310,8 @@ function connectoDB()
     $tables = $connection->query("select * from user_data");
     while ($row = $tables->fetch_assoc())
     {
-       echo  $row['name'] .' '.$row['email'].'<br>';
+        echo  $row['name'] .' '.$row['email'].'<br>';
     }
-
-
-
 }
 
 

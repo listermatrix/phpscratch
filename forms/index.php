@@ -1,5 +1,4 @@
 <?php
-
 session_start();  //enable sessions for the page in order to access session values
 
 
@@ -113,7 +112,6 @@ session_start();  //enable sessions for the page in order to access session valu
         $(document).ready(function () {
           $.get('https://dog.ceo/api/breeds/image/random',function (data) {
                 console.log(data.status)
-
           })
         })
     </script>
