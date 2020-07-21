@@ -99,7 +99,7 @@ $records = $records->fetch_assoc();
 
     <br><br>
     <label>Upload File (max:2mb)</label>
-    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+<!--    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />-->
     <input type="file"  name="user_file" value="file">
 
     <br><br>
