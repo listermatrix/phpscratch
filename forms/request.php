@@ -12,7 +12,7 @@ session_start();
 if(isset($_POST['submit']))
 {
 
-    validate($_POST);
+    validate($_POST,$connection);
 }
 
 
@@ -36,7 +36,7 @@ if(isset($_POST['editBtn']))
    updateUserInfo($connection);
 }
 
-function validate($params)
+function validate($params,$connection)
 {
 
     $name = $params['name'];
@@ -205,29 +205,25 @@ function updateUserInfo($connection)
     $phone_number = $_POST['phone_number'];
 
 
-//    $uploaddir = '/Users/highpriest/PhpstormProjects/learningPhp/forms/uploads/';
-    $uploaddir = 'uploads/';
+    $upload_dir = 'uploads/';
+    $filename = $_FILES['user_file']['name']; //get the name of the file
 
-    $uploadfile = $uploaddir . basename($_FILES['user_file']['name']);
+    $upload_file = $upload_dir . basename($_FILES['user_file']['name']);
 
-    echo '<pre>';
-    if (move_uploaded_file($_FILES['user_file']['tmp_name'], $uploadfile)) {
+
+
+    if (move_uploaded_file($_FILES['user_file']['tmp_name'], $upload_file)) {
         echo "File is valid, and was successfully uploaded.\n";
     } else {
         echo "Possible file upload failure!\n";
     }
 
-    echo 'Here is some more debugging info:';
-    print_r($_FILES);
-    print "</pre>";
-    exit();
-
-
     /** @noinspection SqlNoDataSourceInspection */
     $statement =  "update   user_data set 
                             name     = '$name' ,  
                             phone_number = '$phone_number' ,  
-                            username = '$username',             
+                            username = '$username',  
+                            file_name = '$upload_file', 
                             email    = '$email' where 
                             id = $id;";  //update statement
 

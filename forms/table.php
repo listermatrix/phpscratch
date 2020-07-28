@@ -36,6 +36,7 @@ $tables = $connection->query("select * from user_data");
                 <th>Email</th>
                 <th>Username</th>
                 <th>PhoneNumber</th>
+                <th>File</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -48,6 +49,7 @@ $tables = $connection->query("select * from user_data");
                     <td>'.$row['email'].'</td>
                     <td>'.$row['username'].'</td>
                     <td>'.$row['phone_number'].'</td>
+                    <td><a href="'.$row['file_name'].'">Get File</a></td>
                     <td>
                     <a href="request.php?delete='.$row['id'].'" style="color:red">Delete</a>
                     <a href="request.php?edit='.$row['id'].'" style="color: blue">Edit</a>
@@ -66,6 +68,7 @@ $tables = $connection->query("select * from user_data");
             <th>Email</th>
             <th>Username</th>
             <th>PhoneNumber</th>
+            <th>File</th>
             <th>Action</th>
         </tr>
         </tfoot>
