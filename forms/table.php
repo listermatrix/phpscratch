@@ -1,16 +1,13 @@
 <?php
-$host = 'localhost'; //same as 127.0.0.1
-$username = 'root';
-$password = '';
-$database = 'php_form';
+require_once 'connection.php';
 
-$connection = new mysqli($host,$username,$password,$database);  //we didnt specify the database name
 
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
 $tables = $connection->query("select * from user_data");
+//$tables->num_rows
 
 ?>
 

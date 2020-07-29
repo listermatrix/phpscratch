@@ -11,7 +11,6 @@ session_start();
 
 if(isset($_POST['submit']))
 {
-
     validate($_POST,$connection);
 }
 
@@ -173,10 +172,6 @@ function processData($connection)
     //database name,
     //insert statement
     //close the connection
-
-
-
-
 
     $name = $_POST['name'];
     $username = $_POST['username'];

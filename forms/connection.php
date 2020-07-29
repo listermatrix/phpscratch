@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost'; //same as 127.0.0.1
 $username = 'root';
-$password = '';
+$password = 'Oneness123@';
 $database = 'php_form';
 $port = '3306';  // ??
 

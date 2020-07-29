@@ -1,7 +1,6 @@
 <?php
 session_start();  //enable sessions for the page in order to access session values
 
-
 //session_destroy();  //destroy or close the session
 
 
@@ -9,7 +8,6 @@ session_start();  //enable sessions for the page in order to access session valu
 //    exit();
 
 ?>
-
 
 
 <html>
@@ -23,31 +21,6 @@ session_start();  //enable sessions for the page in order to access session valu
 <form method="post"  action="request.php">
 
 
-    <div class="howSatisfied">
-
-        &nbsp;       <label>1</label>
-        &nbsp;&nbsp; <label>2</label>
-        &nbsp;&nbsp; <label>3</label>
-        &nbsp;&nbsp; <label>4</label>
-        &nbsp;&nbsp;&nbsp; <label>5</label>
-        &nbsp;&nbsp; <label>6</label>
-        &nbsp;&nbsp; <label>7</label>
-        &nbsp;&nbsp; <label>8</label>
-        &nbsp;&nbsp; <label>9</label>
-        &nbsp;&nbsp; <label>10</label>
-
-        <br>
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-        <input type="radio" name="one" value="1">
-    </div>
 
             <p style="color: red">
         <?php
@@ -107,7 +80,7 @@ session_start();  //enable sessions for the page in order to access session valu
 
     <br>
     <label>Name</label>
-    <input type="text" value="" name="name" required>
+    <input type="text" value="" name="name" >
 
     <br><br>
 
