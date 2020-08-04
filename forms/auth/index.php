@@ -1,6 +1,16 @@
 <?php
     session_start();
+
     $errorMessage = $_SESSION["field_error"]  ?? null;
+
+
+    $is_logged_in  = isset($_SESSION['logged_in_user']);    //returns either true or false. if the logged_in_user index exists in the $_SESSION array
+
+    if($is_logged_in == true)
+    {
+        header('location:../table.php');  //redirects the user to the dashboard  page
+    }
+
 ?>
 <html lang="en">
     <head>
@@ -62,14 +72,19 @@
             <div class="form-login">
                 <form method="post" action="login.php">
                 <h4>Welcome back. , Login</h4>
-                <input type="text" id="userName" name="username" class="form-control input-sm chat-input" placeholder="username" />
+                <input type="text" id="userName" name="dynamic_field" class="form-control input-sm chat-input" placeholder="username or email" />
                 </br>
                 <input type="password" id="userPassword" name="password" class="form-control input-sm chat-input" placeholder="password" />
                 </br>
                 <div class="wrapper">
             <span class="group-btn">
                 <button  class="btn btn-primary btn-md" type="submit">login <i class="fa fa-sign-in"></i></button>
+
+
+
+                <a  href="register.php" class="btn btn-danger btn-md" type="submit">Sign Up <i class="fa fa-user"></i></a>
             </span>
+
                 </div>
                 </form>
             </div>

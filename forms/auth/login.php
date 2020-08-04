@@ -1,29 +1,21 @@
 <?php
 
-//
-//$password =  password_hash('password', PASSWORD_DEFAULT);
-//var_dump($password);
-//exit();
-
-
 session_start();
 require_once '../connection.php';
+
 
 processLogin($connection);
 
 function processLogin($connection)
 {
-    $username  = $_POST['username'];
+
+    $dynamic_field  = $_POST['dynamic_field'];
     $password =  $_POST['password'];
+
 
     $field_error = null;
 
-    if($username  || $password)
-    {
-        echo 'hello';
-    }
-
-    if(empty($username)  || empty($password))
+    if(empty($dynamic_field)  || empty($password))
 
     {
         $field_error = 'All fields are required';
@@ -32,8 +24,22 @@ function processLogin($connection)
     }
     else{
 
-        //query to check if username exist
-        $tables = $connection->query("select * from users where username='$username'");
+        //check for the field type , if its a username or email
+        $db_field = filter_var($dynamic_field, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+
+//        if(filter_var($dynamic_field, FILTER_VALIDATE_EMAIL)){
+//            $db_field = 'email';
+//        }
+//        else{
+//            $db_field = 'username';
+//        }
+
+
+        //query to check if username  or email exist
+//        echo  "select * from users where $db_field='$dynamic_field'";
+//        exit();
+        $tables = $connection->query("select * from users where $db_field='$dynamic_field'");
         $count = $tables->num_rows;  //number of results returned from query
 
 
@@ -41,11 +47,13 @@ function processLogin($connection)
         if($count == 1)
         {
             //for password verification
-            $hashedPassword = $tables->fetch_assoc()['password'];
+            $results  = $tables->fetch_assoc();
+            $hashedPassword = $results['password'];
             if(password_verify($password,$hashedPassword))
             {
-                $_SESSION['field_error'] = '';
-                header('location:../table.php');
+                $_SESSION['field_error'] = '';   //set the field error to empty string
+                $_SESSION['logged_in_user'] = $dynamic_field;  //we store the username of the logged in user
+                header('location:../table.php');  //redirect to table
             }
             else
             {

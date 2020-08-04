@@ -1,17 +1,25 @@
 <?php
 require_once 'connection.php';
 
+session_start();  //session start to access the session array / variable
+$is_logged_in  = isset($_SESSION['logged_in_user']);    //returns either true or false. if the logged_in_user index exists in the $_SESSION array
+
+
+if($is_logged_in == false)
+{
+    header('location:auth/index.php');  //redirect the user to the login page
+}
+
 
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
 $tables = $connection->query("select * from user_data");
-//$tables->num_rows
 
 ?>
 
-<html>
+<html lang="en">
 <head>
     <title>mysql-data</title>
 
@@ -26,6 +34,10 @@ $tables = $connection->query("select * from user_data");
 </head>
 
 <body>
+        <button style="background-color: darkgreen; margin-left: 90%">
+            <a href="auth/logout.php" style="color: white; font-weight: bold">logout</a>
+        </button>
+        <hr>
     <table style="width: 100%">
         <thead>
             <tr>
