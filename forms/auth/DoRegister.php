@@ -2,6 +2,7 @@
 
 session_start();
 require_once '../connection.php';
+require_once 'SendEmail.php';
 
 processRegistration($connection);
 function processRegistration($connection)
@@ -25,22 +26,36 @@ function processRegistration($connection)
     }
     else{
 
-        $passwordHash  = password_hash($password,PASSWORD_DEFAULT);
-        /** @noinspection SqlInsertValues */
-        $statement =  "insert into users (name,username,email,password) values ('$name','$username','$email','$passwordHash')";
-        $insert = $connection->query($statement);
-        if($insert  == true)
+
+        if($password !== $passwordConfirm)
         {
-            $field_error = '';
+            $field_error = 'Passwords does not match';
             $_SESSION['field_error']  = $field_error;
-            header('location:login.php');  //redirect user back to login form
+            header('location:register.php');  //redirect user back to registration page
         }
-        else{
-            $field_error = 'Registration failed kindly try again';
-            $_SESSION['field_error']  = $field_error;
-            header('location:register.php');  //redirect user back to registration form form
+        else {
+            $passwordHash  = password_hash($password,PASSWORD_DEFAULT);
+            /** @noinspection SqlInsertValues */
+            $statement =  "insert into users (name,username,email,password) values ('$name','$username','$email','$passwordHash')";
+            $insert = $connection->query($statement);
+            if($insert  == true)
+            {
+                $field_error = '';
+                $_SESSION['field_error']  = $field_error;
+                sendEmailToClient($name,$email);  //call our email function to send email
+                header('location:index.php');  //redirect user back to login form
+            }
+            else{  //if the query failed then redirect to the registeratio from with errors
+                $field_error = 'Registration failed kindly try again';
+                $_SESSION['field_error']  = $field_error;
+                header('location:register.php');  //redirect user back to registration form form
+            }
         }
-        exit();
+
+
+
+
+
 
     }
 

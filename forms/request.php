@@ -7,8 +7,6 @@ require_once 'connection.php';
 // pass them to the view
 session_start();
 
-
-
 if(isset($_POST['submit']))
 {
     validate($_POST,$connection);

@@ -3,7 +3,6 @@ session_start();
 
 $errorMessage = $_SESSION["field_error"]  ?? null;
 
-
 $is_logged_in  = isset($_SESSION['logged_in_user']);    //returns either true or false. if the logged_in_user index exists in the $_SESSION array
 
 if($is_logged_in == true)
@@ -90,7 +89,7 @@ if($is_logged_in == true)
 
                     <div class="wrapper">
                         <span class="group-btn">
-                            <a  href="" class="btn btn-primary btn-md" type="submit">Cancel <i class="fa fa-times"></i></a>
+                            <a  href="login.php" class="btn btn-primary btn-md" type="submit">Cancel <i class="fa fa-times"></i></a>
                             <button class="btn btn-danger btn-md" type="submit">Submit <i class="fa fa-user"></i></button>
                         </span>
                     </div>
