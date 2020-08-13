@@ -3,7 +3,6 @@
 session_start();
 require_once '../connection.php';
 
-
 processLogin($connection);
 
 function processLogin($connection)
@@ -70,6 +69,14 @@ function processLogin($connection)
         }
     }
 
+}
+
+
+
+function log($message,$connection)
+{
+    $statement =  "insert into logs (username,date,activity) values ('$username','$date','$message')";
+    $connection->query($statement);
 }
 
 

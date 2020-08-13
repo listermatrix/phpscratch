@@ -94,34 +94,34 @@
 </div>
 
 
-    <script>
-        $(document).ready(function () {
-            const loginForm = $('#login-fom'),
-                url = '../resources/login_api.php';
-
-            loginForm.on('submit',function (t) {  //to stop the form from submitting
-                t.preventDefault();
-               let  form_data = loginForm.serialize();
-
-                //then make ajax call
-                $.post(url,form_data,function (data) {
-                    let output = JSON.parse(data)  //decode the encoded response to json
-                    console.log(output)
-                    console.log(output.code)
-                    if(output.code === 200)
-                    {
-                      window.location.replace('../table.php')  //redirect to table.php
-                    }
-                    else
-                    {
-                        alert(output.response);
-                    }
-
-                })
-                //then print ajax response
-                //then redirection to page
-            })
-        })
-    </script>
+<!--    <script>-->
+<!--        $(document).ready(function () {-->
+<!--            const loginForm = $('#login-fom'),-->
+<!--                url = '../resources/login_api.php';-->
+<!---->
+<!--            loginForm.on('submit',function (t) {  //to stop the form from submitting-->
+<!--                t.preventDefault();-->
+<!--               let  form_data = loginForm.serialize();-->
+<!---->
+<!--                //then make ajax call-->
+<!--                $.post(url,form_data,function (data) {-->
+<!--                    let output = JSON.parse(data)  //decode the encoded response to json-->
+<!--                    console.log(output)-->
+<!--                    console.log(output.code)-->
+<!--                    if(output.code === 200)-->
+<!--                    {-->
+<!--                      window.location.replace('../table.php')  //redirect to table.php-->
+<!--                    }-->
+<!--                    else-->
+<!--                    {-->
+<!--                        alert(output.response);-->
+<!--                    }-->
+<!---->
+<!--                })-->
+<!--                //then print ajax response-->
+<!--                //then redirection to page-->
+<!--            })-->
+<!--        })-->
+<!--    </script>-->
     </body>
 </html>
