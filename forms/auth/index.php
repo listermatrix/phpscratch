@@ -70,7 +70,7 @@
             <?php  echo  $errorMessage ? '<div class="alert alert-danger" role="alert">'.$errorMessage.'</div>' : null  ?>
 
             <div class="form-login">
-                <form method="post" action="login.php">
+                <form method="post" action="login.php" id="login-fom">
                 <h4>Welcome back. , Login</h4>
                 <input type="text" id="userName" name="dynamic_field" class="form-control input-sm chat-input" placeholder="username or email" />
                 </br>
@@ -92,5 +92,36 @@
         </div>
     </div>
 </div>
+
+
+    <script>
+        $(document).ready(function () {
+            const loginForm = $('#login-fom'),
+                url = '../resources/login_api.php';
+
+            loginForm.on('submit',function (t) {  //to stop the form from submitting
+                t.preventDefault();
+               let  form_data = loginForm.serialize();
+
+                //then make ajax call
+                $.post(url,form_data,function (data) {
+                    let output = JSON.parse(data)  //decode the encoded response to json
+                    console.log(output)
+                    console.log(output.code)
+                    if(output.code === 200)
+                    {
+                      window.location.replace('../table.php')  //redirect to table.php
+                    }
+                    else
+                    {
+                        alert(output.response);
+                    }
+
+                })
+                //then print ajax response
+                //then redirection to page
+            })
+        })
+    </script>
     </body>
 </html>
