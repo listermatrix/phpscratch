@@ -52,6 +52,7 @@ function processLogin($connection)
             {
                 $_SESSION['field_error'] = '';   //set the field error to empty string
                 $_SESSION['logged_in_user'] = $dynamic_field;  //we store the username of the logged in user
+                audit('Logged In to Dashboard',$connection);
                 header('location:../table.php');  //redirect to table
             }
             else
@@ -73,11 +74,18 @@ function processLogin($connection)
 
 
 
-function log($message,$connection)
+//audit trails or logs
+function audit($message,$connection)
 {
+    $username = $_SESSION['logged_in_user']   ?? 'anonymousUser';
+    $date = date('Y-m-d h:m:s');  //give us the current date and time
     $statement =  "insert into logs (username,date,activity) values ('$username','$date','$message')";
     $connection->query($statement);
+
 }
+
+
+
 
 
 
